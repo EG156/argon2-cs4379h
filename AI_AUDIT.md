@@ -35,7 +35,7 @@ is updated as we work; the commit history shows it growing.
 | Student Researcher | Task 2: topic choice and the AI Idea Appendix |
 | Reproducibility Checker | Task 3: the code, the verification plan, and this AI_AUDIT log |
 | Archaeologist | Verifying the two README references (prior work Argon2 builds on, later work that builds on Argon2) |
-| Quanta Correspondent | Plain-language explanation of Argon2 for a general audience *(to be confirmed on Canvas)* |
+| Quanta Correspondent | Midway task (Nov 3): a Quanta-style article for a broad audience vs an AI-written article, blind class vote |
 
 ## Log
 
@@ -66,7 +66,7 @@ Role is one of: Reviewer, Archaeologist, Student Researcher, Reproducibility Che
 | 21 | 2026-10-05 | Student Researcher | AI Idea 1: implement Argon2 from the spec, verify against the reference, benchmark m/t/p, simulate a tradeoff attack | OK | Yes | Labeled feasible and adopted as our topic. Confirmed by doing it: RFC vectors pass, experiments run on a laptop in about 30 s | Matthew Tidwell |
 | 22 | 2026-10-05 | Student Researcher | AI Idea 2: benchmark GPU cracking speed of Argon2 vs bcrypt, scrypt, PBKDF2 | OK | Yes | Accurate idea but labeled already published: cracking-tool benchmarks and the PHC benchmarks the paper cites cover it. Rejected for novelty, not for being wrong | Matthew Tidwell |
 | 23 | 2026-10-05 | Student Researcher | AI Idea 3: use Argon2d to hash passwords on a shared cloud server because it is faster and more tradeoff-resistant | OC | No | Labeled technically flawed: Argon2d's data-dependent memory access leaks timing to anyone sharing the hardware; the paper recommends Argon2i where attackers can reach the machine. Demo section 4 shows the leak | Matthew Tidwell |
-| 24 | | Quanta Correspondent | *(to add: plain-language explanation used in slides)* | | | | |
+| 24 | 2026-11-03 | Quanta Correspondent | Midway task: team article for a general audience vs an AI-written article, blind class vote at the Nov 3 session | n/a | No | Not logged: Matthew was absent on Nov 3 and has no record of whether the team presented or which AI article was used, so no AI output from this task was relied on in the repo. The plain-language explanation in the final demo's opening was written from the verified README and paper | Matthew Tidwell |
 
 ## End-of-semester summary (fill in before the final demo)
 
