@@ -25,7 +25,7 @@ EuroS&P 2016. DOI [10.1109/EuroSP.2016.31](https://doi.org/10.1109/EuroSP.2016.3
 | `argon2_impl.py` | The Argon2 implementation (H0, H', G, indexing, memory filling) |
 | `test_argon2.py` | Test suite: RFC vectors, H0, intermediate blocks, 60 random cases vs argon2-cffi |
 | `experiments.py` | Regenerates every CSV and chart in `results/` with one command |
-| `demo.py` | Short live demo for the presentation |
+| `demo.py` | Live demo for the presentation: correctness, brute-force race, memory use, side channel, tradeoff attack, password storage, charts |
 | `results/*.csv` | Raw experiment data |
 | `results/figures/*.png` | Charts used in the slides |
 | `CODE_GUIDE.md` | Function-by-function map to the paper and RFC 9106 sections |
@@ -72,9 +72,10 @@ There is nothing to compile: "build" is just the `pip install` step.
 |---|---|---|
 | `python test_argon2.py` | Runs all tests, prints PASS per test | ~5 s |
 | `python -m pytest -q` | Same tests through pytest | ~5 s |
-| `python demo.py` | Live demo; opens the charts at the end | ~2 s |
-| `python demo.py "your password"` | Demo with your own password | ~2 s |
-| `python demo.py --no-charts` | Demo without opening chart windows | ~2 s |
+| `python demo.py` | Live demo menu (7 sections, pick one or run all) | ~15 s total |
+| `python demo.py all` | Every demo section in order, Enter between steps | ~15 s + talking |
+| `python demo.py 2` | Only section 2 (any number 1-7) | seconds |
+| `python demo.py all --no-pause --no-charts` | Non-interactive run, for checking | ~12 s |
 | `python experiments.py` | Regenerates `results/*.csv` and `results/figures/*.png` | ~30 s |
 | `python experiments.py --quick` | Smaller sizes, for a fast check | ~10 s |
 | `python argon2_impl.py` | One-line smoke test | <1 s |
@@ -122,7 +123,7 @@ There is nothing to compile: "build" is just the `pip install` step.
 ## What doesn't work / limitations
 
 - **Speed.** Pure Python is roughly 25 to 150 times slower than the C library
-  (see `demo.py` timings). Fine for learning and for small test sizes, not for
+  (see `python demo.py 1` timings). Fine for learning and for small test sizes, not for
   production.
 - **No real parallelism in our implementation.** Lanes are computed one after
   another. The lane-scaling result in Experiment 1 uses argon2-cffi, which

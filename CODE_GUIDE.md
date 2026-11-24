@@ -224,9 +224,16 @@ but wrong pass 1 means the XOR rule or the pass > 0 indexing is off.
 
 ## 5. `demo.py`: presentation demo
 
-| Function | Purpose |
-|---|---|
-| `compare` | Hash with our code and argon2-cffi, print both tags and times |
-| `bits_changed` | Count differing bits (avalanche check) |
-| `open_file` | Open a chart with the OS viewer (Windows / macOS / Linux) |
-| `main` | Runs the six demo steps listed at the top of the file |
+Run `python demo.py` for a menu, `python demo.py all` for every section, or
+`python demo.py N` for one section.
+
+| Section / function | What it shows | Paper / RFC link |
+|---|---|---|
+| 1 `section_correctness`, `compare`, `bits_changed` | Our tags equal argon2-cffi's for Argon2id/d/i; one-bit password change flips about half the tag bits; RFC vectors, H0 and intermediate blocks match | RFC §5 |
+| 2 `section_bruteforce` | Cracks a 4-digit PIN stored with salted SHA-256 in milliseconds; the same attack on Argon2id (OWASP settings) manages about 50 guesses per second | paper I, II-A (motivation) |
+| 3 `section_memory` | Peak RAM of one Argon2id hash at m = 64 MiB, 256 MiB, 1 GiB (uses `experiments.peak_rss_kib`) | paper III-A, VII |
+| 4 `section_side_channel`, `reference_columns` | Reference block numbers for two passwords: different under Argon2d, identical under Argon2i | paper III-C; RFC §3.4.1 |
+| 5 `section_tradeoff` | Attacker keeps 1/k of memory; computation penalty C next to paper Table I (uses Experiment 4 functions) | paper II-A, V-A, Table I |
+| 6 `section_storage` | `$argon2id$v=19$m=...` string format; verify right and wrong password; fresh salt each time | RFC §4 (parameters) |
+| 7 `section_charts`, `open_file` | Opens the four experiment charts with the OS viewer | |
+| `heading`, `pause`, `menu`, `run`, `run_all`, `main` | Output formatting, Enter-to-continue, menu and argument handling | |
