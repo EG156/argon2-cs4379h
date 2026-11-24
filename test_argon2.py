@@ -11,7 +11,6 @@ Verification suite for argon2_impl.py.
 Run:  python -m pytest -q        (or)        python test_argon2.py
 """
 
-import os
 import random
 
 from argon2.low_level import Type, hash_secret_raw
@@ -48,16 +47,19 @@ CFFI_TYPE = {ARGON2D: Type.D, ARGON2I: Type.I, ARGON2ID: Type.ID}
 
 # ---------------------------------------------------------------- tests
 def test_rfc_vectors():
+    """Final tags match RFC 9106 Sections 5.1-5.3 for all three variants."""
     for y, expected in RFC_TAGS.items():
         assert argon2_hash(PW, SALT, type_=y, **RFC_PARAMS).hex() == expected
 
 
 def test_h0_matches_rfc():
+    """H0 matches the "Pre-hashing digest" printed in RFC 9106 Section 5.1."""
     h0 = compute_h0(PW, SALT, SECRET, AD, p=4, tag_len=32, m=32, t=3, y=ARGON2D)
     assert h0.hex() == RFC_ARGON2D_H0
 
 
 def test_intermediate_blocks_match_rfc():
+    """Memory words after passes 0, 1, 2 match RFC 9106 Section 5.1 (Argon2d)."""
     seen = {}
 
     def hook(pass_n, blocks):
@@ -70,6 +72,7 @@ def test_intermediate_blocks_match_rfc():
 
 
 def test_random_against_argon2_cffi(n_cases=60, seed=4379):
+    """60 random parameter sets: our tag must equal argon2-cffi's tag."""
     rng = random.Random(seed)
     for _ in range(n_cases):
         y = rng.choice([ARGON2D, ARGON2I, ARGON2ID])
@@ -77,8 +80,9 @@ def test_random_against_argon2_cffi(n_cases=60, seed=4379):
         m = rng.randint(8 * p, 256)
         t = rng.randint(1, 4)
         tag_len = rng.choice([4, 16, 32, 64, 65, 100, 128])  # >64 exercises H'
-        pw = os.urandom(rng.randint(0, 40))
-        salt = os.urandom(rng.randint(8, 32))
+        # Seeded bytes (not os.urandom) so every run tests the same cases.
+        pw = rng.randbytes(rng.randint(0, 40))
+        salt = rng.randbytes(rng.randint(8, 32))
 
         mine = argon2_hash(pw, salt, time_cost=t, memory_kib=m, parallelism=p,
                            tag_len=tag_len, type_=y)

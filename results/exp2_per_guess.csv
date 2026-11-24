@@ -1,5 +1,5 @@
 scheme,time_ms,memory_per_guess_kib,max_parallel_guesses_in_24GiB
-PBKDF2-SHA256 (600k iter),93.0,0.2,125829120
-bcrypt (cost 10),68.9,4.0,6291456
-"Argon2id (19 MiB, t=2)",22.9,19456,1293
-"Argon2id (64 MiB, t=3)",164.0,65536,384
+PBKDF2-SHA256 (600k iter),92.6,0.2,125829120
+bcrypt (cost 10),70.1,4.0,6291456
+"Argon2id (19 MiB, t=2)",23.6,19456,1293
+"Argon2id (64 MiB, t=3)",178.7,65536,384

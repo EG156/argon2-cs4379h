@@ -3,7 +3,7 @@ Experiments for the Argon2 project. Each experiment writes a CSV into results/
 and a chart into results/figures/, so every number in the slides can be
 reproduced with one command:
 
-    python experiments.py            # all experiments (about 2 to 4 minutes)
+    python experiments.py            # all experiments (about 30 seconds on a laptop)
     python experiments.py --quick    # smaller sizes, for a fast check
 
 Experiment 1  Cost scaling: time and peak memory vs m, t, p (argon2-cffi, C code)
@@ -38,6 +38,7 @@ INK, INK2, SURFACE = "#0b0b0b", "#52514e", "#fcfcfb"
 
 
 def write_csv(name, header, rows):
+    """Write rows (with a header row) to results/<name>."""
     os.makedirs(RESULTS, exist_ok=True)
     path = os.path.join(RESULTS, name)
     with open(path, "w", newline="") as f:
@@ -98,6 +99,15 @@ def peak_rss_kib(m, t, p):
 # ---------------------------------------------------------------------------
 
 def exp1_scaling(quick):
+    """
+    Measure how Argon2id's cost grows with its three cost parameters
+    (paper Section III-A inputs; RFC 9106 Section 4 parameter choice):
+      m : memory in KiB  -> time and peak RSS (expected: both linear in m)
+      t : passes         -> time (expected: linear in t)
+      p : lanes          -> time (expected: drops while p <= CPU cores)
+    Uses argon2-cffi (the reference C code) so the numbers reflect real
+    performance, not Python overhead.
+    """
     print("Experiment 1: cost scaling with m, t, p (argon2-cffi)")
     mems = [1024, 4096, 16384, 65536] if quick else [1024, 4096, 16384, 65536, 262144]
     # Memory is measured first, before this process hashes anything large.
@@ -165,6 +175,14 @@ def exp2_per_guess(quick):
 # ---------------------------------------------------------------------------
 
 def exp3_g_calls(quick):
+    """
+    Count calls to the compression function G in our implementation.
+
+    Each of the t*m blocks costs one G call, except the 2 first blocks per
+    lane that come from H' (p = 1 here, so t*m - 2). Argon2i and Argon2id
+    also spend 2 G calls per address block (one per 128 data-independent
+    blocks), so their counts are slightly higher.
+    """
     print("Experiment 3: G-call counts of the pure-Python implementation")
     rows = []
     mems = [64, 256, 1024] if quick else [64, 256, 1024, 4096]
@@ -273,6 +291,14 @@ PAPER_TABLE_I = {  # 1-pass Argon2d, ranking tradeoff attack (paper, Table I)
 
 
 def exp4_tradeoff(quick):
+    """
+    Reproduce the idea of paper Table I (Section V-A, ranking tradeoff
+    attack): an attacker who keeps only a fraction alpha = 1/k of the memory
+    of 1-pass Argon2d must recompute missing blocks. We report C(alpha)
+    (computation penalty) and D(alpha) (latency penalty), defined in paper
+    Section II-A, for two simple attacker strategies, next to the paper's
+    numbers.
+    """
     print("Experiment 4: time-memory tradeoff attack on 1-pass Argon2d")
     n = 4096 if quick else 16384
     ref = dependency_graph(n, ARGON2D)
@@ -303,6 +329,7 @@ def exp4_tradeoff(quick):
 # ---------------------------------------------------------------------------
 
 def _style(ax, title, xlabel, ylabel):
+    """Shared chart styling: title, axis labels, light grid, no top/right spines."""
     ax.set_facecolor(SURFACE)
     ax.set_title(title, loc="left", fontsize=12, color=INK, pad=10)
     ax.set_xlabel(xlabel, color=INK2)
@@ -317,6 +344,7 @@ def _style(ax, title, xlabel, ylabel):
 
 
 def make_charts(r1, r2, r4):
+    """Draw the four PNG figures in results/figures/ from experiment rows."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -324,6 +352,7 @@ def make_charts(r1, r2, r4):
     os.makedirs(FIGURES, exist_ok=True)
 
     def save(fig, name):
+        """Lay out, save at 200 dpi, and close a figure."""
         fig.patch.set_facecolor(SURFACE)
         fig.tight_layout()
         path = os.path.join(FIGURES, name)
@@ -397,6 +426,7 @@ def make_charts(r1, r2, r4):
 
 
 def main():
+    """Run all experiments, then draw the charts."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true", help="smaller, faster runs")
     args = ap.parse_args()
