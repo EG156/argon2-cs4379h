@@ -35,7 +35,7 @@ is updated as we work; the commit history shows it growing.
 | Student Researcher | Task 2: topic choice and the AI Idea Appendix |
 | Reproducibility Checker | Task 3: the code, the verification plan, and this AI_AUDIT log |
 | Archaeologist | Verifying the two README references (prior work Argon2 builds on, later work that builds on Argon2) |
-| Quanta Correspondent | Midway task (Nov 3): a Quanta-style article for a broad audience vs an AI-written article, blind class vote |
+| Quanta Correspondent | Midway task (submitted Oct 7, presented Nov 3): a Quanta-style explanation for a broad audience, compared against an AI-written article by blind class vote |
 
 ## Log
 
@@ -66,7 +66,7 @@ Role is one of: Reviewer, Archaeologist, Student Researcher, Reproducibility Che
 | 21 | 2026-10-05 | Student Researcher | AI Idea 1: implement Argon2 from the spec, verify against the reference, benchmark m/t/p, simulate a tradeoff attack | OK | Yes | Labeled feasible and adopted as our topic. Confirmed by doing it: RFC vectors pass, experiments run on a laptop in about 30 s | Matthew Tidwell |
 | 22 | 2026-10-05 | Student Researcher | AI Idea 2: benchmark GPU cracking speed of Argon2 vs bcrypt, scrypt, PBKDF2 | OK | Yes | Accurate idea but labeled already published: cracking-tool benchmarks and the PHC benchmarks the paper cites cover it. Rejected for novelty, not for being wrong | Matthew Tidwell |
 | 23 | 2026-10-05 | Student Researcher | AI Idea 3: use Argon2d to hash passwords on a shared cloud server because it is faster and more tradeoff-resistant | OC | No | Labeled technically flawed: Argon2d's data-dependent memory access leaks timing to anyone sharing the hardware; the paper recommends Argon2i where attackers can reach the machine. Demo section 4 shows the leak | Matthew Tidwell |
-| 24 | 2026-11-03 | Quanta Correspondent | Midway task: team article for a general audience vs an AI-written article, blind class vote at the Nov 3 session | n/a | No | Not logged: Matthew was absent on Nov 3 and has no record of whether the team presented or which AI article was used, so no AI output from this task was relied on in the repo. The plain-language explanation in the final demo's opening was written from the verified README and paper | Matthew Tidwell |
+| 24 | 2026-10-07 | Quanta Correspondent | Midway Quanta-style overview (3 slides, submitted Oct 7, graded 4/5): the problem (offline cracking of stolen hashes on faster hardware), why it matters (limits damage from large leaks), and the contribution (memory-hard variants Argon2d and Argon2i that raise memory and compute cost per guess) | n/a | Yes (content) | The submitted slides contain no AI-generated text that the team relied on, so there is no AI output to log; the AI-written comparison article from the class vote is not in our records (Matthew was absent Nov 3). Checked the slides' claims against the paper: accurate, and Argon2id (added later in RFC 9106) is correctly not claimed | Matthew Tidwell |
 
 ## End-of-semester summary (fill in before the final demo)
 
