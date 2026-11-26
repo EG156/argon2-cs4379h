@@ -190,3 +190,8 @@ September 2021. <https://www.rfc-editor.org/rfc/rfc9106>
 Our professor approved AI assistance on this project. Every AI output we relied
 on (code, claims, citations) is logged in [`AI_AUDIT.md`](AI_AUDIT.md) with how
 we checked it, including the mistakes we caught.
+
+
+## Follow-up research: hardware-aware Argon2id optimizer
+
+Caleb Tyler's follow-up contribution is in [Argon2_Optimizer](Argon2_Optimizer/README.md). It combines local CPU benchmarking with a stored RTX 4090 GPU profile and configurable optimization objectives. See the [desktop instructions](Argon2_Optimizer/DESKTOP_README.md), [previous experiments](Previous_Experiments/README.md), [optimizer validation](Optimizer_Validation/README.md), and the consolidated [AI audit](AI_AUDIT.md). The prior stacking experiments include negative results. The tool's recommendations are conditional on the measured attacker hardware, parameter grid and defender constraints, not universal security guarantees.
