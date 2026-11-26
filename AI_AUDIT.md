@@ -6,7 +6,7 @@ CS 4379H Cryptography, Fall 2026
 - **Paper:** A. Biryukov, D. Dinu, D. Khovratovich, "Argon2: New Generation of
   Memory-Hard Functions for Password Hashing and Other Applications," IEEE
   EuroS&P 2016
-- **AI assistant(s) used:** Claude (Claude Opus 5.5), via claude.ai
+- **AI assistant(s) used:** Claude (Claude Opus 5.5), via claude.ai, ChatGPT
 
 ## How to use this log
 
@@ -184,11 +184,3 @@ Source references below are those recorded in the original development/related-w
 - Cryptsetup calibration source: https://gitlab.com/cryptsetup/cryptsetup/-/raw/main/lib/crypto_backend/pbkdf_check.c and https://gitlab.com/cryptsetup/cryptsetup/-/raw/main/lib/utils_pbkdf.c
 - Multifactor published parameter-selection methodology: https://multifactor.com/blog/kdf-parameter-selection-part-1 and https://multifactor.com/blog/kdf-parameter-selection-part-2
 
-Before submission, Caleb and the team should:
-
-- Review the above entries against actual benchmark outputs and code; independently verify any AI claims cited in the final report. Retain original raw results, known-answer test evidence, source revisions and third-party license notices.
-- Run the final unit tests/packaged self-test and save the outputs if not already saved. Distinguish AI-generated fixture tests from real hardware runs.
-- Resolve or disclose pending optional-backend known-answer verification, statistical multiple-comparison limitations, and GPU profile coverage. Do not state that measured Hashcat throughput proves overall cryptographic security.
-- Add desktop/laptop validation evidence and the incomplete laptop GPU collection evidence to the repository if absent. Mark the laptop collection as a functionality test, not a finished profile.
-- Verify the paper's literature references, reviewer disagreement table, AI idea classifications, and Archaeologist older/newer citation links independently. No separate fabricated-citation incident is asserted for Caleb's optimizer work without evidence.
-- Keep the original team audit entries and contributor names. If a claim is verified later, update its status and record the actual check rather than deleting the original failure.
